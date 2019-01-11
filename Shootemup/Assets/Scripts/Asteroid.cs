@@ -13,20 +13,30 @@ using System.Collections;
 public class Asteroid : MonoBehaviour {
 
     [Tooltip("How fast does the asteroid move in units per second")]
-	public float speed = 20;
+	public float minSpeed = 1;
+	[Tooltip("How fast does the asteroid move in units per second")]
+	public float maxSpeed = 5;
 	[Tooltip("Direction of the asteroids movement")]
-	public Vector2 direction = new Vector2(0, -1);
+	public float maxXAngle = -1;
+	[Tooltip("Direction of the asteroids movement")]
+	public float minXAngle = 1;
     [Tooltip("How long does the asteroid life before it is automatically destroyed, in seconds")]
-    public float lifeTime = 1;
+    public float lifeTime = 10;
     [Tooltip("How fast does the asteroid rotate, in degrees")]
     public float rotationSpeed = 60;
     [Tooltip("A prefab that is instantiated when the asteroid is destroyed")]
     public GameObject explosionPrefab;
 
+	float speed;
+	Vector2 direction = new Vector2();
+
     /// <summary>
     /// Start this instance. Get Called by Unity when this GameObject enters the scene
     /// </summary>
     void Start(){
+		speed = Random.Range (minSpeed, maxSpeed);
+		direction.x = Random.Range (minXAngle, maxXAngle);
+		direction.y = -1;
         // Start the KillAfterSeconds coroutine immediately, so the asteroid is destroyed after lifetime seconds pass.
         StartCoroutine(KillAfterSeconds(lifeTime));
 		// normalize direction so it does not impact the travel speed

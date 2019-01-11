@@ -13,9 +13,9 @@ using System.Collections;
 public class AsteroidSpawn : MonoBehaviour {
 
     [Tooltip("A prefab that is instantiated when the asteroid is destroyed")]
-    public float spawnWidth;
+    public float spawnWidth = 1;
     [Tooltip("How many asteroids spawn per second?")]
-    public float spawnRate;
+    public float spawnRate = 1;
     [Tooltip("The prefab that is to be instantiated as asteroids")]
     public GameObject AsteroidPrefab;
 

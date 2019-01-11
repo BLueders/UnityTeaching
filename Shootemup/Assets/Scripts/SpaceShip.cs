@@ -2,7 +2,7 @@
 // Copyright (c) 2017 All Rights Reserved
 // </copyright>
 // <author>Benno Lueders</author>
-// <date>07/14/2017</date>
+// <date>18/06/2018</date>
 
 using UnityEngine;
 using System.Collections;
@@ -15,9 +15,9 @@ using UnityEngine.SceneManagement;
 public class SpaceShip : MonoBehaviour {
 
 	[Tooltip("How fast is the spaceship moving left to right")]
-    public float speed;
+    public float speed = 1;
 	[Tooltip("How fast is the spaceship shooting")]
-    public float rateOfFire;
+    public float rateOfFire = 1;
     [Tooltip("Prefab to be instantiated when shooting (Projectile)")]
     public GameObject projectilePrefab;
     [Tooltip("Prefab to be instantiated when dying (explosioin)")]
@@ -26,35 +26,40 @@ public class SpaceShip : MonoBehaviour {
     public AudioClip laserSound;
 
     private float lastTimeFired = 0;
+	private bool isDead = false;
 
     /// <summary>
     /// This is called by Unity every frame. It handles the ships movement and checks if it should fire
     /// </summary>
     void Update() {
 
+		if(isDead) return;
+
         // move the ship left and right, depending on the horizontal input
         transform.position += Vector3.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime;
 
         // if the fire button is pressed and we waited long enough since the last shot was fired, FIRE!
-        if (Input.GetButton("Fire") && (lastTimeFired + 1 / rateOfFire) < Time.time) {
+        if (Input.GetKey(KeyCode.Space) && (lastTimeFired + 1 / rateOfFire) < Time.time) {
             lastTimeFired = Time.time;
             FireTheLasers();
-        } 
+        }
     }
 
     /// <summary>
-    /// This is called by Unity when the object collides with another object. It is only called, when both objects have any 2D collider attached, at least one of them is a trigger and at least of of
-    /// the two colliding GameObjects has a Rigidbody2D attached.
+    /// This is called by Unity when the object collides with another object. It is only called, when both objects have any 2D Collider attached, none them is a trigger and at least of of
+    /// the two colliding GameObjects has a Rigidbody2D attached. If one of the two 2D Colliders is a trigger, OnTriggerEnter2D(Collider other) is called instead.
     /// </summary>
-    void OnTriggerEnter2D(Collider2D other){
+    void OnCollisionEnter2D(Collision2D col){
 
         // if the other object has the asteroid tag, the destroy the ship and restard the game
-        if(other.CompareTag("Asteroid")){
+        if(col.gameObject.CompareTag("Asteroid")){
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-			// kill the spaceship (not instantly, Destroy() will remove the Gameobject from the scene after this Updatecycle)
-			Destroy (gameObject);
 			// load the active scene again, to restard the game. The GameManager will handle this for us. We use a slight delay to see the explosion.
-			GameManager.instance.RestartTheGameAfterSeconds(1);
+			StartCoroutine(RestartTheGameAfterSeconds(1));
+			// we can not destroy the spaceship since it needs to run the coroutine to restart the game.
+			// instead, disable update (isDead = true) and remove the renderer to "hide" the object while we reload.
+			isDead = true;
+			Destroy(GetComponent<SpriteRenderer>());
         }
     }
 
@@ -63,11 +68,27 @@ public class SpaceShip : MonoBehaviour {
 	/// </summary>
     void FireTheLasers(){
         AudioSource.PlayClipAtPoint(laserSound, transform.position);
-		// Create the new projectile a bit in front of the spaceship and store the reference to the new gameobject. 
-		// the Instatiate function creates a new GameObject copy (clone) from a Prefab at a specific location and orientation.
-		GameObject projectileObject = Instantiate(projectilePrefab, transform.position + Vector3.up, Quaternion.identity) as GameObject;
-		// Get access to the script on the new projectile using GetComponent to modify it.
-		Projectile projectile = projectileObject.GetComponent<Projectile> ();
-		// Modify the projectile direction?
+
+		// Shooting up
+		Instantiate(projectilePrefab, transform.position + Vector3.up, Quaternion.identity);
+
+		// Shooting left
+
+		// Shooting right
     }
+
+	/// <summary>
+	/// Kill all asteroids in the scene
+	/// </summary>
+	void Bomb(){
+
+	}
+
+	/// <summary>
+	/// Wait seconds and reload current scene.
+	/// </summary>
+	IEnumerator RestartTheGameAfterSeconds(float seconds){
+		yield return new WaitForSeconds (seconds);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
 }
