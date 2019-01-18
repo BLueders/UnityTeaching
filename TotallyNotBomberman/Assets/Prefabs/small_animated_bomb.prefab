@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5599138431159904205}
   - component: {fileID: 2911552895550295478}
   - component: {fileID: 5069050470663238553}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: small_animated_bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ MonoBehaviour:
     type: 3}
   hitLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1025
   hitDistance: 1
   frames:
   - {fileID: 21300066, guid: d12c57928542b92438bb08ca14ede744, type: 3}

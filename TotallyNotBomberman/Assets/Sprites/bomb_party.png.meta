@@ -72,7 +72,7 @@ TextureImporter:
     21300134: explosion_end_left
     21300136: explosion_horizontal
     21300138: explosion_center
-    21300140: explosion_right
+    21300140: explosion_end_right
     21300142: big_bomb1
     21300144: big_bomb2
     21300146: big_bomb3
@@ -102,7 +102,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
@@ -127,7 +127,7 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 15.9
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
@@ -1588,7 +1588,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: explosion_right
+      name: explosion_end_right
       rect:
         serializedVersion: 2
         x: 48

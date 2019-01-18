@@ -5,7 +5,37 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/1_RigidbodyMovement.unity
+    guid: b7f71d3dfca82b64d9012425a56e9236
+  - enabled: 0
+    path: Assets/Scenes/3_BombExplosions.unity
+    guid: efcfe14f15980944581663ca7fe2d553
+  - enabled: 0
+    path: Assets/Scenes/2_BombPlacement.unity
+    guid: 86b70bfcd0364524c9933c02de1bec08
+  - enabled: 0
+    path: Assets/Scenes/4_ActiveBombs.unity
+    guid: 4911f02ba3413d34aab1839656ff3ba7
+  - enabled: 0
+    path: Assets/Scenes/5_BasicPlayerAnimation.unity
+    guid: 32b33fedf6785fb48834b1e0422bd231
+  - enabled: 0
+    path: Assets/Scenes/6_AddPlayer2.unity
+    guid: a43e935bb0c041048bf4d7790cfaa30d
+  - enabled: 0
+    path: Assets/Scenes/Advanced_1_Animations.unity
+    guid: 78cebfeb3b796a74eb38aee95899260b
+  - enabled: 0
+    path: Assets/Scenes/Advanced_3_BombCollision.unity
+    guid: 9e4668076137b8641a408b5f678f53fa
+  - enabled: 0
+    path: Assets/Scenes/Advanced_2_TiledBombPlacement.unity
+    guid: 9146bdf6553e12f408f3e24ee56e28c1
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Game.unity
+    guid: b61a28d2ae46cdf4a929d18ae45f878c
   m_configObjects: {}

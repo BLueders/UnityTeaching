@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player1Controller : MonoBehaviour
+public class Player2Controller : MonoBehaviour
 {
     public float speed;
 
@@ -22,24 +22,24 @@ public class Player1Controller : MonoBehaviour
     {
         float movementHorizontal = 0;
         float movementVertical = 0;
-        if (Input.GetKey(KeyCode.UpArrow)) {
+        if (Input.GetKey(KeyCode.W)) {
             movementVertical = speed;
         }
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.S))
         {
             movementVertical = -speed;
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D))
         {
             movementHorizontal = speed;
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
         {
             movementHorizontal = -speed;
         }
         rb2d.velocity = new Vector2(movementHorizontal, movementVertical);
 
-        if (Input.GetKeyDown(KeyCode.RightControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             bp.PlaceBomb();
         }

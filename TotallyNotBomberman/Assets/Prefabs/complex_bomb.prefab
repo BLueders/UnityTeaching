@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5599138431159904205}
   - component: {fileID: 2911552895550295478}
-  - component: {fileID: 6496696883965023953}
+  - component: {fileID: 1133169710054300831}
+  - component: {fileID: 4232794392202333927}
   m_Layer: 9
-  m_Name: small_bomb
+  m_Name: complex_bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300066, guid: d12c57928542b92438bb08ca14ede744, type: 3}
+  m_Sprite: {fileID: 21300142, guid: d12c57928542b92438bb08ca14ede744, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6496696883965023953
+--- !u!114 &1133169710054300831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,13 +90,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 2961838977330199511}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e53764647ddb674885833ac9403aae4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ab138a85da9a95429825027ddeea9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 2
-  explosion: {fileID: 7856943476747016719, guid: beaae35df89ab864daede54e9a208a4b,
+  explosion: {fileID: 6109842669795197508, guid: e9e376feefb7e1841b2f40b88d77da7e,
     type: 3}
   hitLayers:
     serializedVersion: 2
     m_Bits: 1025
-  hitDistance: 1
+  hitDistance: 3
+  frames:
+  - {fileID: 21300142, guid: d12c57928542b92438bb08ca14ede744, type: 3}
+  - {fileID: 21300144, guid: d12c57928542b92438bb08ca14ede744, type: 3}
+  - {fileID: 21300146, guid: d12c57928542b92438bb08ca14ede744, type: 3}
+  - {fileID: 21300148, guid: d12c57928542b92438bb08ca14ede744, type: 3}
+  - {fileID: 21300150, guid: d12c57928542b92438bb08ca14ede744, type: 3}
+  - {fileID: 21300152, guid: d12c57928542b92438bb08ca14ede744, type: 3}
+  timer: 2
+--- !u!58 &4232794392202333927
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2961838977330199511}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.4
