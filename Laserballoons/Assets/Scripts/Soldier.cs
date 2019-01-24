@@ -26,25 +26,22 @@ public class Soldier : MonoBehaviour {
 
 	void Update () {
 		
-		// this gets the current mouse position (in screen coordinates) and transforms it into world coordinates
-		Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		// the camera is on z = -10, so all screen coordinates are on z = -10. To be on the same plane as the game, we need to set z to 0
-		mouseWorldPos.z = 0;
-
-		// UpdateCrosshair (newCrosshairPosition);
-
-		// OrientSoldier ();
-
-		// create a new function that raycasts along the laser line and checks to balloons, then destroys them if hit. Use the Balloon Layermask to test agains the correct layer.
+		// use GetMouseWorldPosition() and UpdateCrosshair() to make the chrosshair move with the mouse
 
 	}
 
-	/// <summary>
-	/// Orients the soldier using the mouse position (crosshair)
-	/// </summary>
-	void OrientSoldier(){
-		// get the direction in 3D, normalize and use the direction with Atan2 to calculate the angle
-	}
+    /// <summary>
+    /// Grabs the world position of the mouse with z = 0.
+    /// </summary>
+    /// <returns>World position of mouse as Vector3</returns>
+    Vector3 GetMouseWorldPosition() {
+        // this gets the current mouse position (in screen coordinates) and transforms it into world coordinates
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // the camera is on z = -10, so all screen coordinates are on z = -10. To be on the same plane as the game, we need to set z to 0
+        mouseWorldPos.z = 0;
+
+        return mouseWorldPos;
+    }
 
 	/// <summary>
 	/// Updates the crosshair position and the line renderer from the laser to point from laserStart to the crosshair
