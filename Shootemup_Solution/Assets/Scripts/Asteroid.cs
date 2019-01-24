@@ -13,13 +13,7 @@ using System.Collections;
 public class Asteroid : MonoBehaviour {
 
     [Tooltip("How fast does the asteroid move in units per second")]
-	public float minSpeed = 1;
-	[Tooltip("How fast does the asteroid move in units per second")]
-	public float maxSpeed = 5;
-	[Tooltip("Direction of the asteroids movement")]
-	public float maxXAngle = -1;
-	[Tooltip("Direction of the asteroids movement")]
-	public float minXAngle = 1;
+	public float speed = 1;
     [Tooltip("How long does the asteroid life before it is automatically destroyed, in seconds")]
     public float lifeTime = 10;
     [Tooltip("How fast does the asteroid rotate, in degrees")]
@@ -27,37 +21,30 @@ public class Asteroid : MonoBehaviour {
     [Tooltip("A prefab that is instantiated when the asteroid is destroyed")]
     public GameObject explosionPrefab;
 
-	float speed;
 	Vector2 direction = new Vector2();
 
     /// <summary>
     /// Start this instance. Get Called by Unity when this GameObject enters the scene
     /// </summary>
     void Start(){
-		speed = Random.Range (minSpeed, maxSpeed);
-		direction.x = Random.Range (minXAngle, maxXAngle);
-		direction.y = -1;
-        // Start the KillAfterSeconds coroutine immediately, so the asteroid is destroyed after lifetime seconds pass.
-        StartCoroutine(KillAfterSeconds(lifeTime));
+		direction = new Vector2(0,-1);
 		// normalize direction so it does not impact the travel speed
 		direction.Normalize ();
     }
 
     /// <summary>
-    /// Moves the asteroid downwards using speed and rotates it using rotationSpeed. Update is called each frame by Unity
+    /// Moves the asteroid downwards using speed and rotates it using rotationSpeed.
+	/// Also kills the object after lifeTime expires. Update is called each frame by Unity.
     /// </summary>
 	void Update () {
 		transform.position = transform.position + new Vector3(direction.x, direction.y, 0) * speed * Time.deltaTime;
         transform.rotation *= Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, Vector3.forward);
+		
+		lifeTime -= Time.deltaTime;
+		if(lifeTime <= 0){
+			Destroy(gameObject);
+		}
 	}
-
-    /// <summary>
-    /// Destroys the asteroid after seconds. This is a coroutine that needs be started using StartCoroutine().
-    /// </summary>
-    IEnumerator KillAfterSeconds(float seconds){
-        yield return new WaitForSeconds(seconds); // this halts the functions execution for x seconds. Can only be used in coroutines.
-        Destroy(gameObject);
-    }
 
     /// <summary>
     /// Function to evaluate a hit on the asteroid. Is called by another instance when it collides with the asteroid.

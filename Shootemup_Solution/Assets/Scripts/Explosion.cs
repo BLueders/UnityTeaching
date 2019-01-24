@@ -23,6 +23,8 @@ public class Explosion : MonoBehaviour
     public AudioClip explosionSound;
 
     SpriteRenderer spriteRenderer;
+    int currentFrameIndex = 0;
+    float frameTimer;
 
     /// <summary>
     /// Start is called by Unity. This will play our explosion sound and start the sprite animation
@@ -33,20 +35,25 @@ public class Explosion : MonoBehaviour
             AudioSource.PlayClipAtPoint(explosionSound, transform.position);
         }
         spriteRenderer = GetComponent<SpriteRenderer>();
-        StartCoroutine(PlayAnimation());
+        frameTimer = (1f / framesPerSecond);
+        currentFrameIndex = 0;
     }
 
     /// <summary>
-    /// This is a coroutine that cycles through the sprites of our explosion animation. It needs to be started using StartCoroutine().
+    /// Cycles through the sprites of our explosion animation.
     /// </summary>
-    IEnumerator PlayAnimation()
+    void Update()
     {
-        int currentFrameIndex = 0;
-        while (currentFrameIndex < frames.Length) {
-            spriteRenderer.sprite = frames [currentFrameIndex];
-            yield return new WaitForSeconds(1f / framesPerSecond); // this halts the functions execution for x seconds. Can only be used in coroutines.
+        frameTimer -= Time.deltaTime;
+
+        if (frameTimer <= 0) {
             currentFrameIndex++;
+            if (currentFrameIndex >= frames.Length) {
+                Destroy(gameObject);
+                return;
+            }
+            frameTimer = (1f / framesPerSecond);
+            spriteRenderer.sprite = frames[currentFrameIndex];
         }
-        Destroy(gameObject);
     }
 }

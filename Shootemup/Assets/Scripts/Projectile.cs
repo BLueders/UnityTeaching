@@ -26,7 +26,6 @@ public class Projectile : MonoBehaviour
 	/// </summary>
 	void Start ()
 	{
-		StartCoroutine (KillAfterSeconds (lifeTime));
 		// normalize direction so it does not impact the travel speed
 		direction.Normalize ();
 		// make the projectile rotate into the direction it is moving, math will be addressed in lecture 2
@@ -35,11 +34,16 @@ public class Projectile : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Update is called by Unity each frame. This moves the GameObject upwards at speed.
+	/// Update is called by Unity each frame. This moves the GameObject upwards at speed and kills the object after lifeTime expires
 	/// </summary>
 	void Update ()
 	{
 		transform.position += new Vector3 (direction.x, direction.y, 0) * speed * Time.deltaTime;
+		
+		lifeTime -= Time.deltaTime;
+		if(lifeTime <= 0){
+			Destroy(gameObject);
+		}
 	}
 
 	/// <summary>
@@ -52,14 +56,5 @@ public class Projectile : MonoBehaviour
 			asteroid.OnHit (); // notify the asteroid it got hit
 			Destroy (gameObject); // Destory this projectile
 		}
-	}
-
-	/// <summary>
-	/// Destroys the projectile after seconds. This is a coroutine that needs be started using StartCoroutine().
-	/// </summary>
-	IEnumerator KillAfterSeconds (float seconds)
-	{
-		yield return new WaitForSeconds (seconds);
-		Destroy (gameObject);
 	}
 }
