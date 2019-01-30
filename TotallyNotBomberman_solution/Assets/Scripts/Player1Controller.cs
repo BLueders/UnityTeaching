@@ -39,7 +39,7 @@ public class Player1Controller : MonoBehaviour
         }
         rb2d.velocity = new Vector2(movementHorizontal, movementVertical);
 
-        if (Input.GetKeyDown(KeyCode.RightControl))
+        if (Input.GetKeyDown(KeyCode.RightShift)&& bp != null)
         {
             bp.PlaceBomb();
         }

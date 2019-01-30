@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: df951befae155654c9031053af2fabb1
   - enabled: 1
-    path: Assets/Scenes/Game.unity
+    path: Assets/Scenes/1_RigidbodyMovement.unity
     guid: b7f71d3dfca82b64d9012425a56e9236
   - enabled: 1
     path: Assets/Scenes/2_BombPlacement.unity
