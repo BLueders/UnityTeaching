@@ -33,6 +33,8 @@ public class Asteroid : MonoBehaviour {
 	int hp;
 	Vector2 direction = new Vector2();
 
+    public int scoreValue = 5;
+
     /// <summary>
     /// Start this instance. Get Called by Unity when this GameObject enters the scene
     /// </summary>
@@ -80,5 +82,9 @@ public class Asteroid : MonoBehaviour {
 		// the Instatiate function creates a new GameObject copy (clone) from a Prefab at a specific location and orientation.
         Instantiate(explosionPrefab, transform.position, transform.rotation);
         Destroy(gameObject);
+
+        // increase score
+        ScoreManager.instace.AddScore(scoreValue);
+
     }
 }

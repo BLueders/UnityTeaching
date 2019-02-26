@@ -102,15 +102,11 @@ public class SpaceShip : MonoBehaviour
 	IEnumerator HurtRoutine ()
 	{
 		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
-		bool blink = false;
 		float startTime = Time.time;
 		while (startTime + hurtTimer > Time.time) {
-			blink = !blink;
-			if (blink) {
-				sr.color = Color.white;
-			} else {
-				sr.color = Color.red;
-			}
+            sr.color = Color.red;
+			yield return new WaitForSeconds (0.05f);
+			sr.color = Color.white;
 			yield return new WaitForSeconds (0.05f);
 		}
 		sr.color = Color.white;
