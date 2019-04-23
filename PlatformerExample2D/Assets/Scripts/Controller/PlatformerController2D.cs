@@ -57,6 +57,7 @@ public class PlatformerController2D : MonoBehaviour
 
 	void Start ()
 	{
+        lastInputJump = float.NegativeInfinity;
 		canMove = true;
 		rb2d = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
