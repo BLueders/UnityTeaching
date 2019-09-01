@@ -44,6 +44,9 @@
 				if(vOutput.position.y < 0){
 					vOutput.position.y = 0;
 				}
+				if (vOutput.position.x < 0) {
+					vOutput.position.x = 0;
+				}
 				vOutput.position = mul(UNITY_MATRIX_V, vOutput.position);
 				// finally via projection into clip space! (the cube)
 				vOutput.position = mul(UNITY_MATRIX_P, vOutput.position);

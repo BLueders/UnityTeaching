@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class UIHealthPanel : MonoBehaviour
 {
-	[SerializeField] Text healthText;
 	[SerializeField] Image[] hearts;
-	[SerializeField] RectTransform healthSlider;
 
 	public static UIHealthPanel instance {
 		get;

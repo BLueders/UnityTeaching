@@ -45,7 +45,7 @@
 				vOutput.position = mul(unity_ObjectToWorld, vOutput.position); // (unity_ObjectToWorld is UNITY_MATRIX_M)
 				// then into view space:
 				vOutput.position = mul(UNITY_MATRIX_V, vOutput.position);
-				vOutput.position.y += sin(_Time[1] * 2 + vOutput.position.x * 4) + vOutput.position.y;
+				vOutput.position.y += sin(_Time[1] * 2 + vOutput.position.x * 1) + vOutput.position.y;
 				// finally via projection into clip space! (the cube)
 				vOutput.position = mul(UNITY_MATRIX_P, vOutput.position);
 
