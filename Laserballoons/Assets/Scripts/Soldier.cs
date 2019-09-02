@@ -1,8 +1,8 @@
 ﻿// <copyright file="Soldier.cs" company="DIS Copenhagen">
-// Copyright (c) 2017 All Rights Reserved
+// Copyright (c) 2019 All Rights Reserved
 // </copyright>
 // <author>Benno Lueders</author>
-// <date>07/14/2017</date>
+// <date>07/14/2019</date>
 
 using System.Collections;
 using System.Collections.Generic;
@@ -21,8 +21,6 @@ public class Soldier : MonoBehaviour {
 	public GameObject crosshair;
 	[Tooltip("LineRenderer of the laser graphics")]
 	public LineRenderer laserLineRenderer;
-	[Tooltip("The layer of the balloons, for easy raycasting only agains balloons")]
-	public LayerMask balloonLayerMask;
 
 	void Update () {
 		
