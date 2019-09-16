@@ -15,8 +15,9 @@ using UnityEngine;
 public class PlatformerController2D : MonoBehaviour
 {
 	[HideInInspector] public Vector2 input;
-	[HideInInspector] public bool inputJump; // this is buffered from Update and reset every FixedUpdate
-	[HideInInspector] public bool IsGrounded { get { return grounded; } }
+    private bool _inputJump;
+    public bool inputJump { set { if (value) { _inputJump = true; } } } // buffer jump input also from regular Update in _inputJump
+    [HideInInspector] public bool IsGrounded { get { return grounded; } }
 
 	[Tooltip ("Can this object move.")]
 	public bool canMove = true;
@@ -45,10 +46,22 @@ public class PlatformerController2D : MonoBehaviour
 	[Tooltip ("Layers to be considered ground.")]
 	[SerializeField] LayerMask groundLayers = 0;
 
-	bool grounded = false;
-	Rigidbody2D rb2d = null;
+    [Header("Animations")]
+    [Tooltip("How fast does the animation play")]
+    public float animationFPS = 5;
+    [Tooltip("Animation Frames (Sprites) to be played back when not moving.")]
+    public Sprite[] idleFrames;
+    [Tooltip("Animation Frames (Sprites) to be played back when moving.")]
+    public Sprite[] movingFrames;
+    [Tooltip("Animation Frames (Sprites) to be played back while not grounded (jumping or falling).")]
+    public Sprite[] airFrames;
+
 	SpriteRenderer sr = null;
-	Animator anim = null;
+    int currentFrame = 0;
+    float animationTimer = 0;
+
+    bool grounded = false;
+	Rigidbody2D rb2d = null;
 
 	float lostGroundingTime = 0;
 	float lastJumpTime = 0;
@@ -60,7 +73,6 @@ public class PlatformerController2D : MonoBehaviour
         lastInputJump = float.NegativeInfinity;
 		canMove = true;
 		rb2d = GetComponent<Rigidbody2D> ();
-		anim = GetComponent<Animator> ();
 		sr = GetComponent<SpriteRenderer> ();
 	}
 
@@ -87,7 +99,7 @@ public class PlatformerController2D : MonoBehaviour
 		UpdateAnimations ();
 
         // reset jump input every FixedUpdate to buffer from Update based input
-        inputJump = false;
+        _inputJump = false;
 	}
 
 	Vector2 ApplyJump (Vector2 vel)
@@ -123,22 +135,49 @@ public class PlatformerController2D : MonoBehaviour
 
 	void UpdateAnimations ()
 	{
-		if (!canMove) {
-			anim.SetBool ("grounded", false);
+		if (!canMove)
+        {
+            PlayBackAnimation(idleFrames);
 			return;
 		}
-		if (rb2d.velocity.x > 0 && facing == -1) {
+
+        // calculate facing
+		if (rb2d.velocity.x > 0 && facing == -1)
+        {
 			facing = 1;
-		} else if (rb2d.velocity.x < 0 && facing == 1) {
+		} else if (rb2d.velocity.x < 0 && facing == 1)
+        {
 			facing = -1;
-		}
+        }
 		sr.flipX = facing == -1;
-		anim.SetBool ("grounded", grounded);
-		anim.SetFloat ("speed", Mathf.Abs (rb2d.velocity.x));
-		if (lastJumpTime == Time.time) {
-			anim.SetTrigger ("jump");
-		}
+
+        // update animations
+        if (!grounded)
+        {
+            PlayBackAnimation(airFrames);
+        } else if (Mathf.Abs(rb2d.velocity.x) > 0.1f)
+        {
+            PlayBackAnimation(movingFrames);
+        } else
+        {
+            PlayBackAnimation(idleFrames);
+        }
 	}
+
+    void PlayBackAnimation(Sprite[] anim)
+    {
+        animationTimer -= Time.deltaTime;
+        if (animationTimer <= 0 && anim.Length > 0)
+        {
+            animationTimer = 1f / animationFPS;
+            currentFrame++;
+            if (currentFrame >= anim.Length)
+            {
+                currentFrame = 0;
+            }
+            sr.sprite = anim[currentFrame];
+        }
+    }
 
 	/// <summary>
 	/// Return true if the character can jump right now.
@@ -157,7 +196,7 @@ public class PlatformerController2D : MonoBehaviour
 	/// <returns><c>true</c>, if jump input detected, <c>false</c> otherwise.</returns>
 	bool CheckJumpInput ()
 	{
-		if (inputJump) {
+		if (_inputJump) {
 			lastInputJump = Time.time;
 			return true;
 		}
