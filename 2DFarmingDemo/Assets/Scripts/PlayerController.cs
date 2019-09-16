@@ -4,35 +4,68 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
 
-    Rigidbody2D rb2d;
+    public float speed = 10;
 
-    void Start()
+    private Rigidbody2D rb2D;
+
+    private void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        rb2D = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        float movementHorizontal = 0;
-        float movementVertical = 0;
-        if (Input.GetKey(KeyCode.UpArrow)) {
-            movementVertical = speed;
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            movementVertical = -speed;
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            movementHorizontal = speed;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            movementHorizontal = -speed;
-        }
-        rb2d.velocity = new Vector2(movementHorizontal, movementVertical);
+        float speedX = Input.GetAxis("Horizontal") * speed;
+        float speedY = Input.GetAxis("Vertical") * speed;
+
+        rb2D.velocity = new Vector2(speedX, speedY);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Animal animal = other.gameObject.GetComponent<Animal>();
+        if(animal != null)
+        {
+            animal.Feed();
+        }
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+    }
+
+    //public float speed;
+
+    //Rigidbody2D rb2d;
+
+    //void Start()
+    //{
+    //    rb2d = GetComponent<Rigidbody2D>();
+    //}
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    float movementHorizontal = 0;
+    //    float movementVertical = 0;
+    //    if (Input.GetKey(KeyCode.UpArrow)) {
+    //        movementVertical = speed;
+    //    }
+    //    if (Input.GetKey(KeyCode.DownArrow))
+    //    {
+    //        movementVertical = -speed;
+    //    }
+    //    if (Input.GetKey(KeyCode.RightArrow))
+    //    {
+    //        movementHorizontal = speed;
+    //    }
+    //    if (Input.GetKey(KeyCode.LeftArrow))
+    //    {
+    //        movementHorizontal = -speed;
+    //    }
+    //    rb2d.velocity = new Vector2(movementHorizontal, movementVertical);
+    //}
 }
