@@ -1,8 +1,8 @@
 ﻿// <copyright file="Poof.cs" company="DIS Copenhagen">
-// Copyright (c) 2017 All Rights Reserved
+// Copyright (c) 2019 All Rights Reserved
 // </copyright>
 // <author>Benno Lueders</author>
-// <date>07/14/2017</date>
+// <date>07/14/2019</date>
 
 using UnityEngine;
 using System.Collections;
@@ -23,8 +23,11 @@ public class Poof : MonoBehaviour
     public AudioClip poofSound;
     SpriteRenderer spriteRenderer;
 
+    // A simple timer to wait for 1 second to destroy the object
+    private float destructionTimer = 1;
+
     /// <summary>
-    /// Start is called by Unity. This will play our poof sound and start the sprite animation
+    /// Start is called by Unity. This will play our poof sound and start the destruction timer.
     /// </summary>
     void Start()
     {
@@ -32,25 +35,20 @@ public class Poof : MonoBehaviour
 			AudioSource.PlayClipAtPoint(poofSound, transform.position);
         }
         spriteRenderer = GetComponent<SpriteRenderer>();
-		StartCoroutine(WaitToDestroy());
-
-		// instead of using WaitToDestroy, create this Coroutine that will play back a sprite animation from frames and destroy the object afterwards
-		//StartCoroutine(PlayAnimation());
+        
     }
 
-	/// <summary>
-	/// This is a coroutine that destroys the gameobject after 1 second
-	/// </summary>
-	IEnumerator WaitToDestroy(){
-		yield return new WaitForSeconds (1);
-		Destroy (gameObject);
-	}
-
     /// <summary>
-    /// This is a coroutine that cycles through the sprites of our poof animation. It needs to be started using StartCoroutine().
+    /// Currently the Update method only waits for one second [destructionTimer] and then removes the gameObject from the scene.
+    /// Modify this to play back the sprite animation using [frames] and [frameTimer].
     /// </summary>
-    IEnumerator PlayAnimation()
+    void Update()
     {
-		yield return null;
+        // decrease Timer value
+        destructionTimer -= Time.deltaTime;
+        if(destructionTimer <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

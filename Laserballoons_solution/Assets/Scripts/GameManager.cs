@@ -11,19 +11,8 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Almost every game project includes some kind of Game Manager class that handles the overall flow of the game, namely loading and transitioning through scenes.
-/// This class uses the singleton pattern to provide easy access to the outside through the public static instance variable.
 /// </summary>
 public class GameManager : MonoBehaviour {
-
-	// Varibale to store our game manager instance. We need this in order to use instance only functionality like StartCoroutine() for example
-	public static GameManager instance;
-
-	/// <summary>
-	/// Use Awake to initialize the instance with the active script instance from the current scene.
-	/// </summary>
-	void Awake(){
-		instance = this;
-	}
 
 	/// <summary>
 	/// This GameManager will check for input to restart the scene

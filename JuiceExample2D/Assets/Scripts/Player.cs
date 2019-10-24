@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof(PlatformerController))]
+[RequireComponent (typeof(PlatformerController2D))]
 public class Player : MonoBehaviour
 {
 	public enum PlayerStatus
@@ -16,14 +16,14 @@ public class Player : MonoBehaviour
 	[SerializeField] float hurtTimer = 0.1f;
 	[SerializeField] float pushBackStun = 0.5f;
 
-	PlatformerController controller;
+	PlatformerController2D controller;
 	SpriteRenderer[] sr;
 	PlayerStatus status;
 	Coroutine hurtRoutine;
 
 	void Awake ()
 	{
-		controller = GetComponent<PlatformerController> ();
+		controller = GetComponent<PlatformerController2D> ();
 		sr = GetComponentsInChildren<SpriteRenderer> ();
 		status = PlayerStatus.Active;
 	}
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 		}
 
 		if (JuiceControl.ScreenShake) {
-			CameraController.ScreenShakeStrong ();
+			CameraController2D.ScreenShakeStrong ();
 		}
 
 		if (hurtRoutine != null) {

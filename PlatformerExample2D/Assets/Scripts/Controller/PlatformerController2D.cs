@@ -15,7 +15,7 @@ using UnityEngine;
 public class PlatformerController2D : MonoBehaviour
 {
 	[HideInInspector] public Vector2 input;
-	[HideInInspector] public bool inputJump;
+	[HideInInspector] public bool inputJump; // this is buffered from Update and reset every FixedUpdate
 	[HideInInspector] public bool IsGrounded { get { return grounded; } }
 
 	[Tooltip ("Can this object move.")]
@@ -85,6 +85,9 @@ public class PlatformerController2D : MonoBehaviour
 		rb2d.velocity = vel;
 
 		UpdateAnimations ();
+
+        // reset jump input every FixedUpdate to buffer from Update based input
+        inputJump = false;
 	}
 
 	Vector2 ApplyJump (Vector2 vel)

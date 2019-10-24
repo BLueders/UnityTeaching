@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SimpleNPCInputModule2D))]
+[RequireComponent(typeof(PlatformerController2D))]
 public class BlobEnemy : BaseEnemy
 {
 	[SerializeField] LayerMask playerLayer = 0;
@@ -12,12 +14,12 @@ public class BlobEnemy : BaseEnemy
 	Coroutine hurtRoutine;
 	EnemyStatus status;
 	SpriteRenderer[] sr;
-	SimpleNPCInputModule inputModule = null;
+	SimpleNPCInputModule2D inputModule = null;
 
 	void Awake ()
 	{
 		sr = GetComponentsInChildren<SpriteRenderer> ();
-		inputModule = GetComponent<SimpleNPCInputModule> ();
+		inputModule = GetComponent<SimpleNPCInputModule2D> ();
 		status = EnemyStatus.Active;
 	}
 
@@ -58,4 +60,9 @@ public class BlobEnemy : BaseEnemy
 		status = EnemyStatus.Active;
 		inputModule.canMove = true;
 	}
+
+    public override void Die()
+    {
+        Destroy(gameObject);
+    }
 }

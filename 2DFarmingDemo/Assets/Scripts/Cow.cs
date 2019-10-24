@@ -15,7 +15,7 @@ public class Cow : Animal {
 		audio = GetComponent<AudioSource>();
 	}
 
-	public override void Feed(){
+    public override void Feed(){
 		audio.Play();
 	}
 }
