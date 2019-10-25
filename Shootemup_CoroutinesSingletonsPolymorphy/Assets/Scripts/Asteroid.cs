@@ -83,6 +83,10 @@ public class Asteroid : MonoBehaviour {
 
 		// the Instatiate function creates a new GameObject copy (clone) from a Prefab at a specific location and orientation.
         Instantiate(explosionPrefab, transform.position, transform.rotation);
+
+        //increase score
+        ScoreManager.score += 10;
+
         Destroy(gameObject);
     }
 }

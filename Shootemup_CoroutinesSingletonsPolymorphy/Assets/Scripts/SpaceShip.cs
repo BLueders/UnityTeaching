@@ -46,12 +46,8 @@ public class SpaceShip : MonoBehaviour
 
 	void Start ()
 	{
-		hpanel = GameObject.FindObjectOfType<UIHealthPanel> ();
-		if (hpanel == null) {
-			Debug.LogError ("UIHealthPanel component could not be found, add it to the UI.");
-		}
 		hp = maxHP;
-		hpanel.SetLives (maxHP, hp);
+		UIHealthPanel.instance.SetLives (hp);
 	}
 
 	/// <summary>
@@ -84,10 +80,10 @@ public class SpaceShip : MonoBehaviour
 	void Hurt ()
 	{
 		hp--;
-		hpanel.SetLives (maxHP, hp);
 		if (hp <= 0) {
 			Die ();
 		}
+		hpanel.SetLives (hp);
 	}
 
 	void Die ()
