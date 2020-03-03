@@ -12,6 +12,5 @@ public enum EnemyStatus
 public abstract class BaseEnemy : MonoBehaviour
 {
 	public abstract void Hurt ();
-    public abstract void Die ();
 }
 

@@ -1,15 +1,8 @@
-﻿// <copyright file="SnakeEnemy.cs" company="DIS Copenhagen">
-// Copyright (c) 2017 All Rights Reserved
-// </copyright>
-// <author>Benno Lueders</author>
-// <date>07/14/2017</date>
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof(SimpleNPCInputModule2D))]
-[RequireComponent(typeof(PlatformerController2D))]
+[RequireComponent (typeof(SimpleNPCInputModule))]
 public class SnakeEnemy : BaseEnemy
 {
 	[SerializeField] int hitPoints = 3;
@@ -22,14 +15,14 @@ public class SnakeEnemy : BaseEnemy
 	Coroutine hurtRoutine;
 	EnemyStatus status;
 	SpriteRenderer[] sr;
-	SimpleNPCInputModule2D inputModule = null;
+	SimpleNPCInputModule inputModule = null;
 	int maxHitPoints;
 
 	void Awake ()
 	{
 		maxHitPoints = hitPoints;
 		sr = GetComponentsInChildren<SpriteRenderer> ();
-		inputModule = GetComponent<SimpleNPCInputModule2D> ();
+		inputModule = GetComponent<SimpleNPCInputModule> ();
 		status = EnemyStatus.Active;
 	}
 
@@ -63,7 +56,7 @@ public class SnakeEnemy : BaseEnemy
 		hurtRoutine = StartCoroutine (HurtRoutine ());
 	}
 
-    IEnumerator HurtRoutine ()
+	IEnumerator HurtRoutine ()
 	{
 		status = EnemyStatus.Hurt;
 		inputModule.canMove = false;
@@ -94,7 +87,7 @@ public class SnakeEnemy : BaseEnemy
 		inputModule.canMove = true;
 	}
 
-	public override void Die ()
+	public void Die ()
 	{
 		if (JuiceControl.EnemyDeathAnim) {
 			GameObject deadSnake = Instantiate<GameObject> (deadPrefab, transform.position, transform.rotation);
@@ -103,7 +96,7 @@ public class SnakeEnemy : BaseEnemy
 			GameObject deadSnake = Instantiate<GameObject> (bloodPrefab, transform.position, Quaternion.AngleAxis (Random.Range (0, 360), Vector3.forward));
 		}
 		if (JuiceControl.ScreenShake) {
-			CameraController2D.ScreenShakeLight ();
+			CameraController.ScreenShakeLight ();
 		}
 		Destroy (gameObject);
 	}

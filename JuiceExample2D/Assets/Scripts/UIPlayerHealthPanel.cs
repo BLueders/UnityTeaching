@@ -1,23 +1,13 @@
-﻿// <copyright file="UIPlayerHealthPanel.cs" company="DIS Copenhagen">
-// Copyright (c) 2017 All Rights Reserved
-// </copyright>
-// <author>Benno Lueders</author>
-// <date>07/14/2017</date>
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIPlayerHealthPanel : MonoBehaviour
 {
-	[Tooltip ("UI images of the hearts, number of hearts has to be equal to the number of lifes!")]
-	[SerializeField] Image[] hearts = null;
-
-	[Tooltip ("How many hearts are currently shown active")]
+	[SerializeField] Image[] hearts;
 	public int currentLifes = 8;
 
-	[Tooltip ("How long is the blinking animation when a heart is lost")]
 	[SerializeField] float removeLifeAnimTimer = 0.5f;
 
 	public void AddLife ()
@@ -29,7 +19,11 @@ public class UIPlayerHealthPanel : MonoBehaviour
 	public void RemoveLife ()
 	{
 		currentLifes--;
-		hearts [currentLifes].color = new Color (1, 1, 1, 0.2f);
+		if (JuiceControl.AnimateHearts) {
+			StartCoroutine(RemoveLifeAnimationRoutine (hearts [currentLifes]));
+		} else {
+			hearts [currentLifes].color = new Color (1, 1, 1, 0.2f);
+		}
 	}
 
 	IEnumerator RemoveLifeAnimationRoutine (Image sr)
