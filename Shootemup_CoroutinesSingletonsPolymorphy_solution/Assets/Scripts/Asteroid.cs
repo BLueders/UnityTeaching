@@ -83,7 +83,9 @@ public class Asteroid : MonoBehaviour {
     /// <summary>
     /// Destroys the asteroid.
     /// </summary>
-    public void Die(){ 
+    public void Die(){
+
+        ScoreManager.score += 1;
 
 		float puDrop = Random.value;
 		if (puDrop < puDropchance) {

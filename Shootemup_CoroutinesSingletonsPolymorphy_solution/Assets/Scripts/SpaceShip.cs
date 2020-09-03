@@ -92,6 +92,10 @@ public class SpaceShip : MonoBehaviour
 		}
 		ishurting = true;
 		hp--;
+
+        UIHealthPanel panel = FindObjectOfType<UIHealthPanel>();
+        panel.SetLives(maxHP, hp);
+
 		UIHealthPanel.instance.SetLives (maxHP, hp);
 		if (hp <= 0) {
 			Die ();
