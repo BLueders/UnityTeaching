@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
 
 public class ResourceManager {
 
@@ -12,9 +13,20 @@ public class ResourceManager {
 	}
 
 	public static IEnumerator LoadSpriteRoutine(string url, Action<Sprite> onComplete){
-		WWW www = new WWW (url);
-		yield return www;
-		Sprite sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
-		onComplete (sprite);
+        UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url);
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(uwr.error);
+        }
+        else
+        {
+            // Get downloaded asset bundle
+            var texture = DownloadHandlerTexture.GetContent(uwr);
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0));
+            onComplete(sprite);
+
+        }
 	}
 }

@@ -22,14 +22,14 @@ public class PlayerController : MonoBehaviour
         rb2D.velocity = new Vector2(speedX, speedY);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Animal animal = other.gameObject.GetComponent<Animal>();
-        if(animal != null)
-        {
-            animal.Feed();
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    Animal animal = other.gameObject.GetComponent<Animal>();
+    //    if(animal != null)
+    //    {
+    //        animal.Feed();
+    //    }
+    //}
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -37,16 +37,6 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    //public float speed;
-
-    //Rigidbody2D rb2d;
-
-    //void Start()
-    //{
-    //    rb2d = GetComponent<Rigidbody2D>();
-    //}
-
-    //// Update is called once per frame
     //void Update()
     //{
     //    float movementHorizontal = 0;

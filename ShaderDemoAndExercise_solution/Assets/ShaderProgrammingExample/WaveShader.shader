@@ -1,4 +1,6 @@
-﻿Shader "Exercises/WaveShader"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Exercises/WaveShader"
 {
 	// defining the main properties as exposed in the inspector
 	Properties
@@ -41,19 +43,26 @@
 
 				// Do wave transformation in local space of the object, use x axis for phase offset of sin curve.
 				vOutput.position = vInput.position;
-				vOutput.position.y += sin(_Time[1] * _Multiplier/2 + vInput.position.x * _Multiplier) + vInput.position.y;
+
+				float4 pos = vInput.position;
 
 				// the vertex data is comming in in local space, we need to transform it into clip space!
 				// first into world space:
-				vOutput.position = mul(unity_ObjectToWorld, vOutput.position); // (unity_ObjectToWorld is UNITY_MATRIX_M)
+				pos.y += sin(_Time[1] * _Multiplier/2 + pos.x * _Multiplier);
+				pos = mul(unity_ObjectToWorld, pos); // (unity_ObjectToWorld is UNITY_MATRIX_M)
+
 				// then into view space:
-				vOutput.position = mul(UNITY_MATRIX_V, vOutput.position);
+
+				pos = mul(UNITY_MATRIX_V, pos);
+
 				// finally via projection into clip space! (the cube)
-				vOutput.position = mul(UNITY_MATRIX_P, vOutput.position);
+
+				pos = mul(UNITY_MATRIX_P, pos);
 
 				// Or do all operations with the combined ModelViewProjection Matrix!:
-				// vOutput.position = mul(UNITY_MATRIX_MVP, vInput.position);
+			    pos = UnityObjectToClipPos(vInput.position);
 
+				vOutput.position = pos;
 				return vOutput;
 			}
 			
